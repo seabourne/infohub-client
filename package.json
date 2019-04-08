@@ -1,0 +1,39 @@
+{
+  "name": "infohub-client",
+  "version": "1.0.0",
+  "description": "Client library for CCV3 Infohub API",
+  "main": "lib",
+  "scripts": {
+    "preversion": "npm test",
+    "postversion": "npm run build-docs && git push && git push --tags",
+    "test": "jest --runInBand --forceExit",
+    "compile": "rm -rf lib/; babel src --out-dir lib",
+    "prepublish": "npm run compile",
+    "prepare": "npm run compile",
+    "postpublish": "npm run build-docs && npm run publish-docs",
+    "build-docs": "NAME=\"${NAME:-$npm_package_name}\" VERSION=\"${VERSION:-$npm_package_version}\" && documentation readme ./src/index.js --readme-file ./README.md --project-name ${NAME} --project-version ${VERSION} --section ${NAME} --markdown-toc false",
+    "publish-docs": "npm run build-docs && git add ./README.md && git commit -m 'Updated README API Docs' && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seabourne/infohub-client.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seabourne/infohub-client/issues"
+  },
+  "homepage": "https://github.com/seabourne/infohub-client/",
+  "dependencies": {
+    "qs": "^6.7.0",
+    "request": "^2.88.0",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "documentation": "^6.1.0",
+    "jest": "^23.6.0"
+  }
+}
