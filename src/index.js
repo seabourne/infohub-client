@@ -77,6 +77,7 @@ function packageResponse(err, body) {
     err = body
   }
   let response = err ? errorResponse(err) : body
+  if (!response) response = {entities: [], errors: []}
   if (!response.entities) response.entities = [] // hack around Data API bug
   Object.assign(response, RESPONSE_METHODS)
   if (response.errors) Object.assign(response.errors, RESPONSE_ERRORS_METHODS)
@@ -116,7 +117,7 @@ function createReverseLinks(schemas) {
       schemas[t].linksReverse.push(reversed[t][m])
     }
   }
-  
+
   return schemas
 }
 
@@ -141,7 +142,7 @@ function createReverseLinks(schemas) {
  * *   `response.errors.throw()` - throws an error if there are response
  *       errors; does nothing otherwise
  *
- * The Information Hub Access module accepts these 
+ * The Information Hub Access module accepts these
  * configuration properties:
  * *   `baseURL` - The base URL for the Information Hub Data API;
  *       default is `http://localhost/dataapi/`, note the trailing
@@ -315,9 +316,8 @@ class InformationHub {
       )
     })
   }
-  
+
 
 }
 
 export {InformationHub as default}
-
