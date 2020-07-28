@@ -25,7 +25,7 @@ with these methods:
 -   `response.errors.throw()` - throws an error if there are response
       errors; does nothing otherwise
 
-The Information Hub Access module accepts these 
+The Information Hub Access module accepts these
 configuration properties:
 
 -   `baseURL` - The base URL for the Information Hub Data API;
