@@ -65,6 +65,12 @@ function assembleQuery(...args) {
   return query
 }
 
+function assemblePostQuery(...args) {
+  let options = Object.assign({}, ...args),
+      query = qs.parse(qs.stringify(options, {encodeValuesOnly: true}))
+  return query
+}
+
 function errorResponse(err) {
   let response = { entities: [], errors: [] },
       params = { fault: err.toString() }
@@ -206,9 +212,9 @@ class InformationHub {
    */
   getEntities(sel, attrs, cursor) {
     return new Promise((resolve, reject) => {
-      let query = assembleQuery(sel, attrs, cursor)
+      let body = assemblePostQuery(sel, attrs, cursor)
       this._request(
-        { url: '/entities' + query, method: 'GET', json: true },
+        { url: '/entities-query', body: body, method: 'POST', json: true },
         (err, res, body) => {
           resolve(packageResponse(err, body))
         }
